@@ -27,12 +27,17 @@ function mait_ajax_get_testimonials() {
 		wp_die();
 	}
 
-	$args         = wp_unslash( $_POST['block_args'] );
-	$args         = json_decode( $args, true );
+	$args = wp_unslash( $_POST['block_args'] );
+	$args = json_decode( $args, true );
+
+	if ( ! is_array( $args ) ) {
+		wp_send_json_error();
+	}
+
 	$testimonials = new Mai_Testimonials( $args );
 	$data         = [
 		'html'  => $testimonials->get(),
-		'paged' => $args['paged'],
+		'paged' => absint( $testimonials->args['paged'] ),
 	];
 
 	// Make your array as json.

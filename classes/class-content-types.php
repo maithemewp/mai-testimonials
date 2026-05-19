@@ -149,7 +149,7 @@ class Mai_Testimonials_Content_Types {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $_POST['maitestimonials_meta_box_nonce'], 'maitestimonials_meta_box' ) ) {
+		if ( ! wp_verify_nonce( sanitize_key( $_POST['maitestimonials_meta_box_nonce'] ), 'maitestimonials_meta_box' ) ) {
 			return $post_id;
 		}
 
@@ -169,8 +169,13 @@ class Mai_Testimonials_Content_Types {
 		}
 
 		// Update the meta fields.
-		update_post_meta( $post_id, 'url', esc_url_raw( $_POST['maitestimonials_url'] ) );
-		update_post_meta( $post_id, 'byline', sanitize_text_field( $_POST['maitestimonials_byline'] ) );
+		if ( isset( $_POST['maitestimonials_url'] ) ) {
+			update_post_meta( $post_id, 'url', esc_url_raw( wp_unslash( $_POST['maitestimonials_url'] ) ) );
+		}
+
+		if ( isset( $_POST['maitestimonials_byline'] ) ) {
+			update_post_meta( $post_id, 'byline', sanitize_text_field( wp_unslash( $_POST['maitestimonials_byline'] ) ) );
+		}
 	}
 
 	/**

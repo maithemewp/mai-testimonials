@@ -108,23 +108,9 @@ class Mai_Testimonials_Grid_Block {
 			return $close;
 		}
 
-		$post   = $args['params']['entry'];
-		$schema = [
-			'@type'        => 'Review',
-			'reviewRating' => [
-				'@type'       => 'Rating',
-				'ratingValue' => '5',
-			],
-			'author' => [
-				'@type' => 'Person',
-				'name'  => get_the_title( $post ),
-			],
-			'reviewBody' => mai_testimonials_get_schema_content( $post ),
-		];
+		$post = $args['params']['entry'];
 
-		$schema = apply_filters( 'mai_testimonials_review_schema', $schema, $post );
-
-		mai_testimonials_get_schema( $schema );
+		mai_testimonials_get_schema( mai_testimonials_get_review_schema( $post ) );
 
 		return $close;
 	}

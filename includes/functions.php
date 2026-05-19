@@ -61,33 +61,44 @@ function mai_testimonials_get_suffix() {
 }
 
 /**
- * Gets all schemas.
+ * Gets the Review schema array for a single testimonial.
+ *
+ * Single source of truth for the Review schema, shared by the Mai Testimonials
+ * block and the Mai Grid block so both paths stay in sync.
  *
  * @access private
  *
- * @since TBD
+ * @since 2.7.4
  *
- * @param  array $schemas
+ * @param WP_Post $post The testimonial post object.
  *
  * @return array
  */
-function mai_testimonials_get_schemas( $schemas = [] ) {
-	static $cache = [];
+function mai_testimonials_get_review_schema( $post ) {
+	$schema = [
+		'@type'        => 'Review',
+		'reviewRating' => [
+			'@type'       => 'Rating',
+			'ratingValue' => '5',
+		],
+		'author' => [
+			'@type' => 'Person',
+			'name'  => get_the_title( $post ),
+		],
+		'datePublished' => get_the_date( 'c', $post ), // ISO-8601, satisfies schema.org Date/DateTime.
+		'reviewBody'    => mai_testimonials_get_schema_content( $post ),
+	];
 
-	if ( $schemas ) {
-		$cache[] = $schemas;
-	}
-
-	return $cache;
+	return apply_filters( 'mai_testimonials_review_schema', $schema, $post );
 }
 
 /**
- * Gets Review schema.
- * Optionally add new schema to the static variable.
+ * Collects Review schema for the current request.
+ * Optionally add a new Review to the static cache.
  *
  * @access private
  *
- * @since TBD
+ * @since 2.7.4
  *
  * @param array $review Array of schema data.
  * @param bool  $clear  If we should clear cache after storing values.
@@ -111,11 +122,14 @@ function mai_testimonials_get_schema( $review = [], $clear = false ) {
 }
 
 /**
- * Gets sanitized schema content from post.
+ * Gets plain-text schema content from a post for use as reviewBody.
+ *
+ * Returns plain text (no markup): Google expects reviewBody to be text,
+ * not HTML, so all tags are stripped and whitespace collapsed.
  *
  * @access private
  *
- * @since TBD
+ * @since 2.7.4
  *
  * @param WP_post $post The post object.
  *
@@ -125,8 +139,9 @@ function mai_testimonials_get_schema_content( $post ) {
 	$content = get_the_content( $post );
 	$content = do_blocks( $content );
 	$content = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $content ); // Strip script and style tags.
-	$content = strip_tags( $content, [ 'a' ] ); // Strip tags, leave links.
+	$content = wp_strip_all_tags( $content );
+	$content = preg_replace( '/\s+/', ' ', $content ); // Collapse whitespace.
 	$content = trim( $content );
 
-	return wpautop( $content );
+	return $content;
 }

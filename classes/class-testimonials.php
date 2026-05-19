@@ -259,8 +259,6 @@ class Mai_Testimonials {
 
 				$html .= '</div>'; // Inner.
 
-				$this->add_schema();
-
 			$html .= '</div>'; // Open.
 
 			if ( $this->has_slider && 1 === $this->args['paged'] ) {
@@ -737,69 +735,14 @@ class Mai_Testimonials {
 	/**
 	 * Adds review schema to cache.
 	 *
-	 * @since TBD
+	 * @since 2.7.4
 	 *
 	 * @param WP_Post The post object.
 	 *
 	 * @return void
 	 */
 	function add_review( $post ) {
-		$schema = [
-			'@type'        => 'Review',
-			'reviewRating' => [
-				'@type'       => 'Rating',
-				'ratingValue' => '5',
-			],
-			'author' => [
-				'@type' => 'Person',
-				'name'  => get_the_title( $post ),
-			],
-			'reviewBody' => mai_testimonials_get_schema_content( $post ),
-		];
-
-		$schema = apply_filters( 'mai_testimonials_review_schema', $schema, $post );
-
-		mai_testimonials_get_schema( $schema );
-	}
-
-	/**
-	 * Adds schemas
-	 *
-	 * @since TBD
-	 *
-	 * @return void
-	 */
-	function add_schema() {
-		$reviews = mai_testimonials_get_schema( [], true );
-
-		if ( ! $reviews ) {
-			return;
-		}
-
-		$total = $best = 0;
-
-		foreach ( $reviews as $review ) {
-			$total = $total + absint( $review['reviewRating']['ratingValue'] );
-			$best  = $best + 5;
-		}
-
-		$schema = [
-			'@context'        => 'https://schema.org/',
-			'@type'           => 'Organization',
-			'name'            => get_bloginfo( 'name' ),
-			// 'datePublished'   => '2023-06-07T12:19:25+00:00'
-			'aggregateRating' => [
-				'@type'       => 'AggregateRating',
-				'ratingValue' => $total,
-				'bestRating'  => $best,
-				'ratingCount' => count( $reviews ),
-			],
-			'review' => $reviews,
-		];
-
-		$schema = apply_filters( 'mai_testimonials_schema', $schema );
-
-		mai_testimonials_get_schemas( $schema );
+		mai_testimonials_get_schema( mai_testimonials_get_review_schema( $post ) );
 	}
 
 	/**

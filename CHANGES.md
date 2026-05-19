@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.4 (5/19/26)
+## 2.7.4 (TBD)
 * Added: `mai_testimonials_render_schema` filter to disable all testimonial schema output.
 * Fixed: Review schema now includes `datePublished` (ISO-8601), clearing the Google "Review datePublished" warning.
 * Fixed: `aggregateRating` now reports the average rating with `bestRating` of 5 instead of summed values.

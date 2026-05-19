@@ -2,10 +2,10 @@
 
 ## 2.7.4 (TBD)
 * Added: `mai_testimonials_render_schema` filter to disable all testimonial schema output.
+* Changed: `reviewBody` is now plain text instead of HTML, and the Review schema builder is shared by both block paths.
 * Fixed: Review schema now includes `datePublished` (ISO-8601), clearing the Google "Review datePublished" warning.
 * Fixed: `aggregateRating` now reports the average rating with `bestRating` of 5 instead of summed values.
 * Fixed: Reviews collected via the Mai Grid block now output schema (previously dropped).
-* Changed: `reviewBody` is now plain text instead of HTML, and the Review schema builder is shared by both block paths.
 * Note: Google does not show rich results for self-serving Organization-level reviews/ratings, so star snippets may not appear even with valid markup.
 
 ## 2.7.3 (12/5/24)

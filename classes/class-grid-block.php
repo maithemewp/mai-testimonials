@@ -46,7 +46,7 @@ class Mai_Testimonials_Grid_Block {
 	/**
 	 * Disables entry link if post type is testimonial.
 	 *
-	 * @since TBD
+	 * @since 2.7.1
 	 *
 	 * @param bool            $link  If linking the entry.
 	 * @param array           $args  The grid block args.

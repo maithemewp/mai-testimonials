@@ -169,7 +169,7 @@ class Mai_Testimonials_Content_Types {
 		}
 
 		// Update the meta fields.
-		update_post_meta( $post_id, 'url', esc_url( $_POST['maitestimonials_url'] ) );
+		update_post_meta( $post_id, 'url', esc_url_raw( $_POST['maitestimonials_url'] ) );
 		update_post_meta( $post_id, 'byline', sanitize_text_field( $_POST['maitestimonials_byline'] ) );
 	}
 

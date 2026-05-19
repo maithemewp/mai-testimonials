@@ -101,24 +101,17 @@ function mai_testimonials_get_review_schema( $post ) {
  * @since 2.7.4
  *
  * @param array $review Array of schema data.
- * @param bool  $clear  If we should clear cache after storing values.
  *
  * @return array
  */
-function mai_testimonials_get_schema( $review = [], $clear = false ) {
+function mai_testimonials_get_schema( $review = [] ) {
 	static $cache = [];
 
 	if ( $review ) {
 		$cache[] = $review;
 	}
 
-	$return = $cache;
-
-	if ( $clear ) {
-		$cache = [];
-	}
-
-	return $return;
+	return $cache;
 }
 
 /**

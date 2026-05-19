@@ -375,7 +375,6 @@ class Mai_Testimonials_Block {
 						'layout'            => 'block',
 						'button_label'      => __( 'Add Taxonomy Condition', 'mai-testimonials' ),
 						'sub_fields'        => [
-							// TODO: Including ajax load taxonomy name.
 							[
 								'key'           => 'mai_testimonials_taxonomy',
 								'label'         => __( 'Taxonomy', 'mai-testimonials' ),

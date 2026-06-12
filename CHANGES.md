@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.4 (TBD)
+## 2.7.4 (6/12/26)
 * Added: `mai_testimonials_render_schema` filter to disable all testimonial schema output.
 * Changed: Updated the updater.
 * Changed: `reviewBody` is now plain text instead of HTML, and the Review schema builder is shared by both block paths.

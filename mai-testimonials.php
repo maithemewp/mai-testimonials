@@ -5,6 +5,7 @@
  * Plugin URI:      https://bizbudding.com/products/mai-testimonials/
  * Description:     Manage and display testimonials on your website.
  * Version:         2.7.4
+ * Requires PHP:    8.1
  *
  * Author:          BizBudding
  * Author URI:      https://bizbudding.com
